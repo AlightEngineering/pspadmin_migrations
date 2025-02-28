@@ -4,10 +4,16 @@ on:
   #push:
   #  branches:
       - main
+     paths:
+      - 'PSP_Admin/config/qa'
 
 #jobs:
  # migrate-files:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
+
+#Create backup
+    - name: Copy File to Backup Directory
+        run: cp -rp config backup/config.bak
       
