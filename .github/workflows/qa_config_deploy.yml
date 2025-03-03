@@ -12,8 +12,29 @@ on:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
+      uses: actions/checkout@v2
 
 #Create backup
     - name: Copy File to Backup Directory
         run: cp -rp config backup/config.bak
+    - name: Commit Backup
+        run: |
+          #git config --global user.name 'github-actions[bot]'
+          git config user.name 'github-actions[bot]'
+          #git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add backup/yourfile.bak
+          git commit -m 'Backup file'
+          #git push origin main
+#Copy directory to Target
+    - name: Copy directory to target server
+      env:
+        #TARGET_SERVER: ${{ secrets.TARGET_SERVER_DEV_TEST }}
+        #TARGET_USER: ${{ secrets.TARGET_USER }}
+        #TARGET_PATH: ${{ secrets.TARGET_PATH }}
+        #SSH_KEY: ${{ secrets.SSH_KEY }}
+      run: |
+        echo "$SSH_KEY" > ssh_key
+        chmod 600 ssh_key
+        #scp -i ssh_key -r path/to/your/directory $TARGET_USER@$TARGET_SERVER:$TARGET_PATH        
       
