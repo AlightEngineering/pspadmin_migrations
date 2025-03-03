@@ -5,7 +5,7 @@ on:
   #  branches:
   #    - main
   #   paths:
-      - 'PSP_Admin/config/qa'
+      - 'PSP_Admin/qa/config'
 
 #jobs:
  # migrate-files:
