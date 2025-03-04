@@ -6,7 +6,18 @@ on:
   #  branches:
   #    - main
   #   paths:
-      - 'PSP_Admin/qa/config'
+  #    - 'PSP_Admin/qa/config'
+    inputs:
+      file-path:
+        description: 'Path to the file'
+        required: true
+        default: 'PSP_Admin/qa/config'
+      target-path:
+        description: 'Target directory on server'
+        required: true
+        default: '/path/to/target/directory'
+      
+
 
 #jobs:
  # migrate-files:
@@ -32,15 +43,23 @@ on:
           #git add backup/yourfile.bak
           #git commit -m 'Backup file'
           #git push origin main
+          #Create Target directory is not present
+
 #Copy directory to Target
-    - name: Copy directory to target server
+    - name: Create and Copy directory to target server
       env:
         #TARGET_SERVER: ${{ secrets.TARGET_SERVER_QA_TEST }}
         #TARGET_USER: ${{ secrets.TARGET_USER }}
-        #TARGET_PATH: ${{ secrets.TARGET_PATH }}
+        #TARGET_PATH: ${{ github.event.inputs.target-path }}
         #SSH_KEY: ${{ secrets.SSH_KEY }}
       run: |
         echo "$SSH_KEY" > ssh_key
         chmod 600 ssh_key
-        #scp -i ssh_key -r path/to/your/directory $TARGET_USER@$TARGET_SERVER:$TARGET_PATH        
+        #Create directory if not present
+        ssh_key -r  $TARGET_USER@$TARGET_SERVER "mkdir -p $${{ github.event.inputs.target-path }}"
+        #mkdir -p ${{ github.event.inputs['target-directory'] }}
+        #Copy content from source file_path to Taget_path
+        #scp -i ssh_key -r path/to/your/directory $TARGET_USER@$TARGET_SERVER:${{ github.event.inputs.target-path }}
+        #Use below scp first.
+        #scp -i ssh_key -r ${{ github.event.inputs.file-path}} $TARGET_USER@$TARGET_SERVER:${{ github.event.inputs.target-path }}
       
