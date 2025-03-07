@@ -29,29 +29,31 @@ on:
 #Create backup
     #- name: Copy File to Backup Directory
      #   run: cp -rp config backup/config.bak
-    - name: Upload backup as artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: config-backup
-        path: config.tar.gz    
-    #- name: Commit Backup
-       # run: |
+    #- name: Upload backup as artifact
+     # uses: actions/upload-artifact@v2
+      #with:
+       # name: config-backup
+        #path: config.tar.gz    
+    - name: Commit Backup
+        run: |
           #git config --global user.name 'github-actions[bot]'
-          #git config user.name 'github-actions[bot]'
+          git config user.name 'github-actions[bot]'
           #git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          #git config user.email 'github-actions[bot]@users.noreply.github.com'
-          #git add backup/yourfile.bak
-          #git commit -m 'Backup file'
-          #git push origin main
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add backup/yourfile.bak
+          git commit -m 'Backup file'
+          git push origin main
+          
           #Create Target directory is not present
 
 #Copy directory to Target
     - name: Create and Copy directory to target server
       env:
         #TARGET_SERVER: ${{ secrets.TARGET_SERVER_QA_TEST }}
-        #TARGET_USER: ${{ secrets.TARGET_USER }}
-        #TARGET_PATH: ${{ github.event.inputs.target-path }}
-        #SSH_KEY: ${{ secrets.SSH_KEY }}
+        TARGET_SERVER: ${{ secrets.TARGET_SERVER_DV_TEST }}
+        TARGET_USER: ${{ secrets.TARGET_USER }}
+        TARGET_PATH: ${{ github.event.inputs.target-path }}
+        SSH_KEY: ${{ secrets.SSH_KEY }}
       run: |
         echo "$SSH_KEY" > ssh_key
         chmod 600 ssh_key
@@ -61,5 +63,5 @@ on:
         #Copy content from source file_path to Taget_path
         #scp -i ssh_key -r path/to/your/directory $TARGET_USER@$TARGET_SERVER:${{ github.event.inputs.target-path }}
         #Use below scp first.
-        #scp -i ssh_key -r ${{ github.event.inputs.file-path}} $TARGET_USER@$TARGET_SERVER:${{ github.event.inputs.target-path }}
+        scp -i ssh_key -r ${{ github.event.inputs.file-path}} $TARGET_USER@$TARGET_SERVER:${{ github.event.inputs.target-path }}
       
