@@ -18,8 +18,8 @@ on:
       
 
 
-#jobs:
- # migrate-files:
+jobs:
+  migrate-files:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
@@ -57,7 +57,8 @@ on:
         echo "$SSH_KEY" > ssh_key
         chmod 600 ssh_key
         #Create directory if not present
-        ssh_key -r  $TARGET_USER@$TARGET_SERVER "mkdir -p $${{ github.event.inputs.target-path }}"
+        #ssh_key -r  $TARGET_USER@$TARGET_SERVER "mkdir -p $${{ github.event.inputs.target-path }}"
+        ssh -i ssh_key $TARGET_USER@$TARGET_SERVER "mkdir -p $${{ github.event.inputs.target-path }}"
         #mkdir -p ${{ github.event.inputs['target-directory'] }}
         #Copy content from source file_path to Taget_path
         #scp -i ssh_key -r path/to/your/directory $TARGET_USER@$TARGET_SERVER:${{ github.event.inputs.target-path }}
