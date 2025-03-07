@@ -15,7 +15,7 @@ on:
       target-path:
         description: 'Target directory on server'
         required: true
-        default: '/path/to/target/directory'
+        default: '/tmp/ankita'
       
 
 
