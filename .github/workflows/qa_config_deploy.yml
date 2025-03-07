@@ -1,7 +1,7 @@
 name: Config File Migration
 
 on:
-  workflow_dispatch: # Allows manual triggering
+  workflow_dispatch: # Allows manual triggering ...
   #  branches:
   #    - main
   #   paths:
